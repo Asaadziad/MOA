@@ -1,4 +1,4 @@
 build:
-	./build-all.sh
+	./build.sh
 run:
-	./MOA
+	LD_LIBRARY_PATH="./build/" ./build/MOA
