@@ -3,5 +3,5 @@
 mkdir -p build
 
 
-clang++ engine.cpp -fPIC -shared -o ./build/libengine.so
-clang++ main.cpp -o ./build/MOA -lraylib -ldl -lm -lrt -lGL -lpthread -L./build/
+# clang++  game/*.cpp -fPIC -shared -o ./build/libengine.so
+clang++ main.cpp game/*.cpp math/*.cpp -o ./build/MOA -lraylib -ldl -lm -lrt -lGL -lpthread -L./build/
