@@ -15,7 +15,7 @@ Game::Game() {
 }
 
 void Game::init() {
-  this->state->players.push_back(Player("asaad",0,0));
+  this->state->players.push_back(Player("asaad",250,250));
 }
 
 std::vector<Player> Game::getPlayers() {
@@ -26,7 +26,7 @@ void Game::updateAndRender() {
     BeginDrawing();
     ClearBackground(RED);
     
-    for(auto player : this->state->players) {
+    for(auto &player : this->state->players) {
       player.update();
       player.render();
     }

@@ -8,7 +8,7 @@ class Entity {
     Entity();
     Entity(int x, int y);
     Entity(int x, int y, int z);
-    Vec3 getPosition();
+    Vec3& getPosition();
   private:
     Vec3 position; 
 };
