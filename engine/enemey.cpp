@@ -1,24 +1,21 @@
 #include "enemey.h"
 
-
-void Enemey::update(){ 
+void Enemey::update(MissileSystem& missileSystem){ 
   frame_ticks++;
   if(frame_ticks >= 60) {
-    shoot();
+    missileSystem.shootMissile(getPosX(), getPosY() + getHeight() + 10, SOUTH);
     frame_ticks = 0;
   }
-
-  for( auto missile: missiles_shooted) {
-    missile->update();
-  }
+   for(auto& missile: missileSystem.getMissiles()) {
+      missile->update();
+   }
+  
 }
-void Enemey::draw(){
-  DrawRectangle(pos_x,pos_y,50,50,RED);
-  for( auto missile: missiles_shooted) {
+void Enemey::draw(MissileSystem& missileSystem){
+  DrawRectangle(getPosX(),getPosY(), getWidth(), getHeight() ,RED);
+  
+  for(auto& missile: missileSystem.getMissiles()) {
     missile->draw();
   }
+}
 
-}
-void Enemey::shoot(){
-  missiles_shooted.push_back(new Missile(pos_x + 20,pos_y + 50, SOUTH));
-}

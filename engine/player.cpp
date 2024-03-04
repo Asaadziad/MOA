@@ -1,12 +1,5 @@
 #include "player.h"
-#include <iostream>
-  unsigned int Player::getPosX(){
-    return pos_x;
-
-  }
-  unsigned int Player::getPosY(){
-    return pos_y;
-  }
+#include <iostream> 
 
 
   int Player::getSpeedX(){
@@ -33,58 +26,40 @@ static bool checkBoundariesY(unsigned int y) {
  return true; 
 }
 
-void Player::update() {
+void Player::update(MissileSystem& missileSystem) {
   
     if(IsKeyDown(KEY_RIGHT)) {
-      pos_x += speed_x;
-      if(!checkBoundariesX(getPosX())) pos_x -= speed_x;
+      if(checkBoundariesX(getPosX() + speed_x)) setPosX(getPosX() + speed_x);
     }
     if(IsKeyDown(KEY_LEFT)) {
-      pos_x -= speed_x;
-      if(!checkBoundariesX(getPosX())) pos_x += speed_x;
+      if(checkBoundariesX(getPosX() - speed_x)) setPosX(getPosX() - speed_x);
     }
   
     if(IsKeyDown(KEY_UP)) {
-      pos_y -= speed_y;
-      if(!checkBoundariesY(getPosY())) pos_y += speed_y;
+      if(checkBoundariesY(getPosY() - speed_y)) setPosY(getPosY() - speed_y);
     }
     if(IsKeyDown(KEY_DOWN)) {
-      pos_y += speed_y;
-      if(!checkBoundariesY(getPosY())) pos_y -= speed_y;
+      if(checkBoundariesY(getPosY() + speed_y)) setPosY(getPosY() + speed_y);
     } 
     
     if(IsKeyPressed(KEY_SPACE)) {
-      shoot();
+     missileSystem.shootMissile(getPosX(),getPosY(), NORTH); 
     }
     if(IsKeyPressed(KEY_Z)) {
       std::cout << "COORDX: "<< getPosX()
         << " COORDY: " << getPosY() << std::endl;
-    } 
-  std::vector<unsigned int> to_delete;
-  unsigned int i = 0;
-  for(auto missile: missiles_shooted) {
-    missile->update();
-    if(!checkBoundariesX(missile->getPosX()) ||
-        !checkBoundariesY(missile->getPosY())) {
-      delete missile;
-      to_delete.push_back(i);
+    }   
+   
+    for(auto& missile: missileSystem.getMissiles()) {
+      missile->update();
     }
-    i++;
-  }
-
-  for(auto index: to_delete) {
-    missiles_shooted.erase(missiles_shooted.begin() + index);
-  }
-  
 }
 
-void Player::draw() {
-  DrawRectangle(pos_x, pos_y, 50, 50, RED);
-  for(auto missile : missiles_shooted) {
+void Player::draw(MissileSystem& missileSystem) {
+  DrawRectangle(getPosX(), getPosY(), getWidth(), getHeight(), RED);
+  for(auto& missile : missileSystem.getMissiles()) {
     missile->draw();
   }
 }
 
-void Player::shoot() {
-  missiles_shooted.push_back(new Missile(pos_x + 20, pos_y));
-}
+

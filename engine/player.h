@@ -3,21 +3,20 @@
 
 #include "raylib.h"
 #include "missile.h"
-#include <queue>
+#include "missileSystem.h"
+#include "entity.h"
+#include <vector>
 
-class Player {
+
+class Player: public Entity {
  public:
-  Player(unsigned int x, unsigned int y): pos_x(x), pos_y(y), speed_x(2), speed_y(2), hp(100) {};
+  Player(unsigned int x, unsigned int y):Entity(x,y,50,50) , speed_x(2), speed_y(2) {};
   
-  void update();
-  void draw();
+  void update(MissileSystem& missileSystem);
+  void draw(MissileSystem& missileSystem);
   void shoot();
 
-
-
-  /** GETTERS & SETTERS **/
-  unsigned int getPosX();
-  unsigned int getPosY();
+  /** GETTERS & SETTERS **/ 
   int getSpeedX();
   int getSpeedY();
 
@@ -25,10 +24,7 @@ class Player {
   void setSpeedY(int new_speedy);
   /** END OF GETTERS & SETTERS **/
  
- private:
-   unsigned int pos_x;
-   unsigned int pos_y;
-   unsigned int hp;
+ private: 
    unsigned int score;
    int speed_x;
    int speed_y;

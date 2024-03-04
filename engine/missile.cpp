@@ -3,23 +3,20 @@
 void Missile::update() {
  switch(direction) {
   case NORTH:
-    pos_y -= speed;
+    setPosY(getPosY() - speed);
     break;
   case EAST:
-    pos_x -= speed;
+    setPosX(getPosX() - speed); 
     break;
-  case WEST:
-    pos_x += speed;
+  case WEST: 
+    setPosX(getPosX() + speed); 
     break;
   case SOUTH:
-    pos_y += speed;
+    setPosY(getPosY() + speed);
     break;
  };
 }
 
 void Missile::draw() {
-  DrawRectangle(pos_x, pos_y, 10, 10, RED);
+  DrawRectangle(getPosX(), getPosY(), getWidth(), getHeight(), RED);
 }
-
-unsigned int Missile::getPosX(){return pos_x;}
-unsigned int Missile::getPosY(){return pos_y;}

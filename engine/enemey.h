@@ -3,21 +3,17 @@
 
 #include <vector>
 #include "missile.h"
+#include "missileSystem.h"
+#include "entity.h"
 
-class Enemey {
+class Enemey: public Entity {
   public:
-    Enemey(unsigned int x, unsigned int y): pos_x(x),pos_y(y), hp(100), frame_ticks(0) {};
-  void update();
-  void draw();
-  void shoot();
-  
+    Enemey(unsigned int x, unsigned int y): Entity(x, y, 50 ,50), frame_ticks(0) {};
+  void update(MissileSystem& missileSystem);
+  void draw(MissileSystem& missileSystem);
+   
   private:
-    unsigned int pos_x;
-    unsigned int pos_y;
-    unsigned int hp;
-    unsigned int frame_ticks;
-
-    std::vector<Missile*> missiles_shooted;
+    unsigned int frame_ticks; 
 };
 
 #endif
