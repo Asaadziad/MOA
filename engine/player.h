@@ -5,6 +5,7 @@
 #include "missile.h"
 #include "missileSystem.h"
 #include "entity.h"
+#include "HPComponent.h"
 #include <vector>
 
 
@@ -21,11 +22,13 @@ class Player: public Entity {
   int getSpeedY();
 
   void setSpeedX(int new_speedx);
-  void setSpeedY(int new_speedy);
+  void setSpeedY(int new_speedy); 
   /** END OF GETTERS & SETTERS **/
- 
+  
+  void loseHP(unsigned int hit); 
  private: 
    unsigned int score;
+   HPComponent hp; 
    int speed_x;
    int speed_y;
    std::vector<Missile*> missiles_shooted;

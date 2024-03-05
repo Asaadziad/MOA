@@ -2,8 +2,9 @@
 
 Entity::Entity(Entity& e) {
   pos_x = e.getPosX();
-  pos_y = e.getPosY();
-  
+  pos_y = e.getPosY(); 
+  width = e.getWidth();
+  height = e.getHeight();
 }
 
 

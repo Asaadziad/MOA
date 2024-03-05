@@ -2,7 +2,7 @@
 #define MISSILE_SYSTEM_H
 
 #include <memory>
-#include <vector>
+#include <list>
 #include "missile.h"
 
 class MissileSystem {
@@ -10,9 +10,9 @@ class MissileSystem {
   MissileSystem(){};
 
   void shootMissile(unsigned int start_x, unsigned int start_y, Direction d);
-  std::vector<std::unique_ptr<Missile>>& getMissiles();
+  std::list<std::unique_ptr<Missile>>& getMissiles();
   private:
-    std::vector<std::unique_ptr<Missile>> missiles;
+    std::list<std::unique_ptr<Missile>> missiles;
 };
 
 #endif

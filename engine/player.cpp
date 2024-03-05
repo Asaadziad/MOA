@@ -43,23 +43,28 @@ void Player::update(MissileSystem& missileSystem) {
     } 
     
     if(IsKeyPressed(KEY_SPACE)) {
-     missileSystem.shootMissile(getPosX(),getPosY(), NORTH); 
+     missileSystem.shootMissile(getPosX(),getPosY() - 10, NORTH); 
     }
     if(IsKeyPressed(KEY_Z)) {
       std::cout << "COORDX: "<< getPosX()
         << " COORDY: " << getPosY() << std::endl;
     }   
    
-    for(auto& missile: missileSystem.getMissiles()) {
-      missile->update();
-    }
+    
 }
 
 void Player::draw(MissileSystem& missileSystem) {
+  hp.draw(0, 550, 50);
   DrawRectangle(getPosX(), getPosY(), getWidth(), getHeight(), RED);
-  for(auto& missile : missileSystem.getMissiles()) {
-    missile->draw();
-  }
 }
 
+
+void Player::loseHP(unsigned int hp) {
+  unsigned int new_hp = this->hp.getHP();
+  int res = new_hp - hp;
+  if(res < 0) {
+    res = 0;
+  }
+  this->hp.setHP(res);
+}
 

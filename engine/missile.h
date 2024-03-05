@@ -16,7 +16,7 @@ typedef enum {
 class Missile: public Entity {
   public:
     Missile(unsigned int start_x, unsigned int start_y, Direction d) : Entity(start_x,start_y, 10, 10), speed(MISSILE_SPEED_CONST), direction(d) {};
-    Missile(unsigned int start_x, unsigned int start_y): Entity(start_x,start_y), speed(MISSILE_SPEED_CONST), direction(NORTH)  {};
+    Missile(unsigned int start_x, unsigned int start_y): Entity(start_x,start_y, 10, 10), speed(MISSILE_SPEED_CONST), direction(NORTH)  {};
     void update();
     void draw();
       
