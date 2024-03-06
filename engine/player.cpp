@@ -8,13 +8,19 @@
   int Player::getSpeedY(){
     return speed_y;
   }
+
+  unsigned int Player::getScore(){
+    return score;
+  }
   void Player::setSpeedX(int new_speedx){
     speed_x = new_speedx;
   }
   void Player::setSpeedY(int new_speedy){
     speed_y = new_speedy;
   }
-
+  void Player::setScore(unsigned int new_score) {
+    score = new_score;
+  }
 
 static bool checkBoundariesX(unsigned int x) {
   if(x == 0 || x + 50 >= 800) return false;

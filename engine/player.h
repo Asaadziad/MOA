@@ -11,7 +11,7 @@
 
 class Player: public Entity {
  public:
-  Player(unsigned int x, unsigned int y):Entity(x,y,50,50) , speed_x(2), speed_y(2) {};
+  Player(unsigned int x, unsigned int y):Entity(x,y,50,50) ,score(0), speed_x(2), speed_y(2) {};
   
   void update(MissileSystem& missileSystem);
   void draw(MissileSystem& missileSystem);
@@ -20,9 +20,11 @@ class Player: public Entity {
   /** GETTERS & SETTERS **/ 
   int getSpeedX();
   int getSpeedY();
+  unsigned int getScore();
 
   void setSpeedX(int new_speedx);
   void setSpeedY(int new_speedy); 
+  void setScore(unsigned int new_score);
   /** END OF GETTERS & SETTERS **/
   
   void loseHP(unsigned int hit); 

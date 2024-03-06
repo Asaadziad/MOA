@@ -8,6 +8,11 @@ void Enemey::update(MissileSystem& missileSystem){
   } 
   
 }
+
+HPComponent& Enemey::getHPComponent() {
+  return hp;
+}
+
 void Enemey::draw(MissileSystem& missileSystem){
   hp.draw(getPosX(), getPosY() - 20, getWidth() , 10);
   DrawRectangle(getPosX(),getPosY(), getWidth(), getHeight() ,RED); 

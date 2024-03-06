@@ -4,6 +4,7 @@
 #include "player.h"
 #include "enemey.h"
 #include "missileSystem.h"
+#include <vector>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -20,9 +21,14 @@ static bool isOutOfBoundaries(MOA_Rect rect){
   return false;
 }
 
+struct GameData {
+  std::vector<std::unique_ptr<Enemey>> enemies; 
+  GameData(){};
+};
+
 int main() { 
   InitWindow(800, 600, "MOA");
-  
+  GameData data; 
   Physics physics;
   MissileSystem missile_system;
   
@@ -30,14 +36,21 @@ int main() {
   Player p(375, 375);
   Enemey e(375, 100);   
   
+  data.enemies.push_back(std::make_unique<Enemey>(375,100)); 
+  data.enemies.push_back(std::make_unique<Enemey>(200,100));
+  data.enemies.push_back(std::make_unique<Enemey>(450,100));
+  data.enemies.push_back(std::make_unique<Enemey>(300,100));
+
   int frame_i = 0;
   while(!WindowShouldClose()) {
     ClearBackground(BLACK);
-    
+    std::string score_string = "Score: " + std::to_string(p.getScore());
+    DrawText(score_string.c_str(), 0, 0, 28, WHITE); 
+    for(auto& enemey: data.enemies) {
+      enemey->update(missile_system);
+    } 
     p.update(missile_system);
-    e.update(missile_system);
-    for(auto& missile: missile_system.getMissiles()) {
-      
+    for(auto& missile: missile_system.getMissiles()) { 
       missile->update();
     } 
 
@@ -54,9 +67,20 @@ int main() {
          
       }
       if(*tmp == nullptr) continue; 
-      if(physics.IsCollision(e, **tmp)) {
-        e.loseHP(5);
-        missile_system.getMissiles().erase(tmp);
+      std::vector<std::unique_ptr<Enemey>>::iterator it;
+      for(it = data.enemies.begin(); it != data.enemies.end();) {
+      std::vector<std::unique_ptr<Enemey>>::iterator tmp_it;
+      tmp_it = it;
+      it++; 
+      if(physics.IsCollision(**tmp_it, **tmp)) {
+          (*tmp_it)->loseHP(5);
+          if((*tmp_it)->getHPComponent().getHP() == 0 ) {
+            data.enemies.erase(tmp_it);
+            p.setScore(p.getScore() + 1);            
+          }
+          missile_system.getMissiles().erase(tmp);
+          break; 
+        }
       }
       if(*tmp == nullptr) continue;
       if(isOutOfBoundaries((**tmp).getBoundings())) {
@@ -66,8 +90,9 @@ int main() {
     }
 
     p.draw(missile_system); 
-    e.draw(missile_system);
-    
+    for(auto& enemey: data.enemies) {
+      enemey->draw(missile_system);
+    }
     for(auto& missile : missile_system.getMissiles()) {
       
       missile->draw();
