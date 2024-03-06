@@ -5,7 +5,7 @@ class HPComponent {
   public:
     HPComponent(unsigned int hp): hp(hp) {};
     HPComponent(): hp(100) {};
-    void draw(int bottom_left_x, int bottom_left_y, int height);
+    void draw(int top_left_x, int top_left_y,int width, int height);
     
     unsigned int getHP();
     void setHP(unsigned int new_hp);

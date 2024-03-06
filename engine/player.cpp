@@ -54,7 +54,7 @@ void Player::update(MissileSystem& missileSystem) {
 }
 
 void Player::draw(MissileSystem& missileSystem) {
-  hp.draw(0, 550, 50);
+  hp.draw(0, 550, 100, 50);
   DrawRectangle(getPosX(), getPosY(), getWidth(), getHeight(), RED);
 }
 
