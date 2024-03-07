@@ -34,21 +34,21 @@ static bool checkBoundariesY(unsigned int y) {
 
 void Player::update(MissileSystem& missileSystem) {
   
-    if(IsKeyDown(KEY_RIGHT)) {
+    if(IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
       if(checkBoundariesX(getPosX() + speed_x)) setPosX(getPosX() + speed_x);
     }
-    if(IsKeyDown(KEY_LEFT)) {
+    if(IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
       if(checkBoundariesX(getPosX() - speed_x)) setPosX(getPosX() - speed_x);
     }
   
-    if(IsKeyDown(KEY_UP)) {
+    if(IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
       if(checkBoundariesY(getPosY() - speed_y)) setPosY(getPosY() - speed_y);
     }
-    if(IsKeyDown(KEY_DOWN)) {
+    if(IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
       if(checkBoundariesY(getPosY() + speed_y)) setPosY(getPosY() + speed_y);
     } 
     
-    if(IsKeyPressed(KEY_SPACE)) {
+    if(IsKeyDown(KEY_SPACE) || IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
      missileSystem.shootMissile(getPosX(),getPosY() - 10, NORTH); 
     }
     if(IsKeyPressed(KEY_Z)) {

@@ -2,7 +2,7 @@
 
 void Enemey::update(MissileSystem& missileSystem){ 
   frame_ticks++;
-  if(frame_ticks >= 60) {
+  if(frame_ticks >= 30) {
     missileSystem.shootMissile(getPosX(), getPosY() + getHeight() + 10, SOUTH);
     frame_ticks = 0;
   } 

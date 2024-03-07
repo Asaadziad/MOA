@@ -5,6 +5,7 @@
 #include "enemey.h"
 #include "missileSystem.h"
 #include <vector>
+#include <algorithm>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -32,6 +33,14 @@ int main() {
   Physics physics;
   MissileSystem missile_system;
   
+  // Define the camera to look into our 3d world
+    Camera3D camera = { 0 };
+    camera.position = (Vector3){ -10.0f, 15.0f, -10.0f };   // Camera position
+    camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };          // Camera looking at point
+    camera.up = (Vector3){ 15.0f, 1.0f, 15.0f };              // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                    // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;
+
   SetTargetFPS(60);
   Player p(375, 375);
   Enemey e(375, 100);   
@@ -40,9 +49,12 @@ int main() {
   data.enemies.push_back(std::make_unique<Enemey>(200,100));
   data.enemies.push_back(std::make_unique<Enemey>(450,100));
   data.enemies.push_back(std::make_unique<Enemey>(300,100));
-
+  int camera_mode = CAMERA_PERSPECTIVE;
   int frame_i = 0;
   while(!WindowShouldClose()) {
+    UpdateCamera(&camera, camera_mode);
+    
+    BeginMode3D(camera);
     ClearBackground(BLACK);
     std::string score_string = "Score: " + std::to_string(p.getScore());
     DrawText(score_string.c_str(), 0, 0, 28, WHITE); 
@@ -99,7 +111,9 @@ int main() {
     }
 
     frame_i++;
+    EndMode3D();
     EndDrawing();
+    
   }
 
   
